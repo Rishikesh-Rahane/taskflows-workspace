@@ -1,0 +1,13 @@
+{
+  "name": "@taskflows-workspace/shared",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "composite": true,
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "zod": "^4.1.12"
+  }
+}

@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(uuid())
+  custom_id String  @unique @default(cuid())
+  name      String
+  email     String  @unique
+  password  String? 
+  invited   Boolean @default(false)
+
+  parentId String? 
+  parent   User?   @relation("UserHierarchy", fields: [parentId], references: [id])
+  children User[]  @relation("UserHierarchy") 
+
+  assignedTasks Task[]   @relation("TaskAssignee")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  role Role @default(MEMBER)
+
+  projects      Project[] @relation("UserProjects")
+  ownedProjects Project[] @relation("ProjectOwner")
+  comments      Comment[]
+  sites         Site[]
+
+  isActive   Boolean @default(true)
+  isVerified Boolean @default(false)
+  otp String?
+  otpExpiry DateTime?
+}
+
+enum Role {
+  OWNER
+  MANAGER
+  MEMBER
+}
+
+model Site {
+  id        String    @id @default(uuid())
+  custom_id String    @unique @default(cuid())
+  name      String
+  ownerId   String
+  owner     User      @relation(fields: [ownerId], references: [id])
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  custom_id   String   @unique @default(cuid())
+  name        String
+  description String?
+  site_id     String
+  site        Site     @relation(fields: [site_id], references: [id])
+  owner_id    String
+  owner       User     @relation("ProjectOwner", fields: [owner_id], references: [id])
+  users       User[]   @relation("UserProjects")
+  tasks       Task[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  custom_id   String    @unique @default(cuid())
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
+  title       String
+  description String?
+  status      String    @default("todo")
+  assigneeId  String?
+  assignee    User?     @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  dueDate     DateTime?
+  tags        Tag[]     @relation("TaskTags")
+  comments    Comment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([projectId])
+  @@index([assigneeId])
+}
+
+model Tag {
+  id        String @id @default(uuid())
+  custom_id String @unique @default(cuid())
+  name      String @unique
+  tasks     Task[] @relation("TaskTags")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  custom_id String   @unique @default(cuid())
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id])
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+}
