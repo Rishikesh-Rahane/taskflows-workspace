@@ -1,90 +1,144 @@
-# TaskflowsWorkspace
+# 🧭 TaskFlow – Lightweight Project Management Tool
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A **Jira-inspired project management web application** built with the **MERN Stack (MongoDB, Express.js, React, Node.js)**.  
+TaskFlow simplifies team collaboration by helping users **create projects**, **manage tasks**, **track progress**, and **visualize workflows** — all in one place.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## 🚀 Features
 
-## Finish your remote caching setup
+### 🗂️ Project Management
+- Create and manage multiple projects
+- Assign team members and set project timelines
+- Track project progress with summary stats
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/cgZcN7uEDZ)
+### 📋 Work Items (Tasks)
+- Create, update, and assign tasks (work items)
+- Include description, priority, status, due date, and assignee
+- Maintain a full activity history per task
+
+### 🧾 Boards (Kanban)
+- Visualize project progress across *To Do*, *In Progress*, and *Done* stages
+- Drag-and-drop tasks between columns
+
+### 📅 Calendar View
+- Display upcoming tasks and deadlines in a unified team calendar
+
+### 👥 Teams & People
+- Manage team members, roles (Admin, Developer, QA)
+- Assign users to specific projects and tasks
+
+### 🕓 History & Activity Log
+- Capture every task update: status changes, comments, reassignments
+
+### 📊 Dashboard / Summary
+- View total tasks, completion rate, and project insights
+
+### 🔐 Authentication
+- Secure login/signup system using JWT (JSON Web Token)
+- Role-based access control for admins and users
+
+---
+
+## 🧩 Tech Stack
+
+| Layer | Technology |
+|-------|-------------|
+| **Frontend** | React.js (Vite or CRA), Redux Toolkit / Context API, TailwindCSS or Material-UI |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB (Mongoose ODM) |
+| **Authentication** | JWT (JSON Web Token) |
+| **Hosting** | Frontend – Netlify / Vercel <br> Backend – Render / Railway |
+| **Others** | Cloudinary (for user avatars/files), Day.js (for date handling), Nodemailer (for notifications) |
+
+---
+
+## 🧠 System Flow
+
+1. **User Authentication** – Sign up / login securely using JWT.  
+2. **Project Creation** – Admin creates a new project and adds team members.  
+3. **Task Creation** – Members create and assign work items to themselves or others.  
+4. **Board Visualization** – Tasks displayed across Kanban board columns (To Do → In Progress → Done).  
+5. **Calendar View** – Tasks with due dates are shown in a team calendar.  
+6. **Activity Log** – Every update recorded in task history.  
+7. **Dashboard Overview** – Visual summary of overall project status and performance.  
+
+---
+
+## 🧰 Installation & Setup
+
+> **Note:** This assumes you have Node.js and MongoDB installed locally.
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/Rishikesh-Rahane/taskflow.git
+cd taskflow
+```
+2️⃣ Install dependencies
+```bash
+Backend:
+cd server
+npm install
+
+Frontend:
+cd ../client
+npm install
+```
+3️⃣ Configure environment variables
+```bash
+Create a .env file inside the server folder:
+
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_URL=your_cloudinary_config
+```
+4️⃣ Run the app in development
+```bash
+Open two terminals:
+
+Backend:
+
+cd server
+npm run dev
 
 
-## Generate a library
+Frontend:
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+cd client
+npm run dev
+
+
+Visit your app at:
+👉 http://localhost:5173 (or the port your React app runs on)
 ```
 
-## Run tasks
+---
 
-To build the library use:
+## 🧑‍💻 Author
 
-```sh
-npx nx build pkg1
-```
+**Rishikesh Rahane**  
+🔗 [LinkedIn](https://linkedin.com/in/rishikesh-rahane)  
+💻 [Portfolio](https://portfolio-rishi-kappa.vercel.app/)  
+📧 rahanerishikesh63@gmail.com  
 
-To run any task with Nx use:
+---
 
-```sh
-npx nx <target> <project-name>
-```
+## 📜 License
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+This project is licensed under the **MIT License** – feel free to use and modify it for learning or personal projects.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-## Versioning and releasing
+## 💬 Feedback
 
-To version and release the library use
+If you find this project useful or have suggestions for improvements,  
+feel free to **open an issue** or **submit a pull request**.  
+Contributions are always welcome and appreciated!
 
-```
-npx nx release
-```
+---
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+> ⚠️ **Note:** This project is still under active development.  
+> Upcoming features include advanced permission controls, real-time notifications, and analytics dashboards.
 
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
